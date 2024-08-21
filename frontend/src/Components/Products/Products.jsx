@@ -2,6 +2,7 @@
 import ProductItem from "./ProductItem";
 import ProductsData from "../../data.json";
 import Slider from "react-slick";
+import PropTypes from "prop-types";
 import "./Products.css";
 
 const Products = () => {
@@ -40,7 +41,7 @@ const Products = () => {
         <div className="product-wrapper product-carousel">
           <Slider {...sliderSettings}>
             {product.map((product) => (
-              <ProductItem product={product} key={product.id} />
+              <ProductItem productItem={product} key={product.id} />
             ))}
           </Slider>
         </div>
@@ -50,3 +51,8 @@ const Products = () => {
 };
 
 export default Products;
+
+Products.propTypes = {
+  productItem: PropTypes.object,
+  setCartItems: PropTypes.func,
+};
