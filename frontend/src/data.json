@@ -54,8 +54,8 @@
         "id": 4,
         "name": "Mercury Tee",
         "price": {
-            "oldPrice": 165.00,
-            "newPrice": 48.00
+            "oldPrice": 185.00,
+            "newPrice": 46.00
         },
         "discount": 40,
         "img": {
@@ -74,7 +74,7 @@
             "oldPrice": 165.00,
             "newPrice": 48.00
         },
-        "discount": 40,
+        "discount": 50,
         "img": {
             "singleImage": "img/products/product5/1.png",
             "thumbs": [

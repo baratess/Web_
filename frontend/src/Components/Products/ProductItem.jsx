@@ -1,5 +1,6 @@
 ﻿import PropTypes from "prop-types";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import { CartContext } from "../../Context/CartProvider";
 import "./ProductItem.css";
 
@@ -10,16 +11,20 @@ const ProductItem = ({ productItem }) => {
     (cartItem) => cartItem.id === productItem.id
   );
 
+  const Try = () => {
+    console.log(productItem.id);
+  };
+
   return (
     <div className="product-item glide__slide glide__slide--active">
       <div className="product-image">
         <a href="#">
           <img src={productItem.img.singleImage} alt="" className="img1" />
-          <img src={productItem.img.thumbs[1]} alt="" className="img2" />
+          <img src={productItem.img[1]} alt="" className="img2" />
         </a>
       </div>
       <div className="product-info">
-        <a href="$" className="product-title">
+        <a href="#" className="product-title">
           {productItem.name}
         </a>
         <ul className="product-star">
@@ -59,9 +64,13 @@ const ProductItem = ({ productItem }) => {
           <button>
             <i className="bi bi-heart-fill"></i>
           </button>
-          <a href="#" className="product-link">
+          <Link
+            to={`product/:${productItem.id}`}
+            className="product-link"
+            onClick={Try()}
+          >
             <i className="bi bi-eye-fill"></i>
-          </a>
+          </Link>
           <a href="#">
             <i className="bi bi-share-fill"></i>
           </a>
