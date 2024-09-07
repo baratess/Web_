@@ -2,12 +2,18 @@
 import { Link, useLocation } from "react-router-dom";
 import PropType from "prop-types";
 import { CartContext } from "../../../Context/CartProvider";
+import { useAuth } from "../../Auth/AuthContext";
 import "./Header.css";
 
 const Header = ({ setIsSearch }) => {
   const { cartItems } = useContext(CartContext);
 
   const { pathname } = useLocation();
+
+  const authContext = useAuth(); // AuthContext'ten dönen değeri al
+  console.log("AuthContext:", authContext); // AuthContext'in içeriğini kontrol et
+
+  const isLogin = authContext?.isLogin; // isLogin'in var olup olmadığını kontrol et
 
   return (
     <header>
@@ -215,15 +221,16 @@ const Header = ({ setIsSearch }) => {
                 <Link to={"/auth"} className="header-account">
                   <i className="bi bi-person"></i>
                 </Link>
+
+                {/* <Link to={"/auth"} className="header-account">
+                  <i className="bi bi-person"></i>
+                </Link> */}
                 <button
                   className="search-button"
                   onClick={() => setIsSearch(true)}
                 >
                   <i className="bi bi-search"></i>
                 </button>
-                <a href="#">
-                  <i className="bi bi-heart"></i>
-                </a>
                 <div className="header-cart">
                   <Link to={"/cart"} className="header-cart-link">
                     <i className="bi bi-bag"></i>
@@ -232,6 +239,12 @@ const Header = ({ setIsSearch }) => {
                     </span>
                   </Link>
                 </div>
+
+                {!isLogin && (
+                  <button className="search-button" onClick={() => {}}>
+                    <i className="bi bi-box-arrow-right"></i>
+                  </button>
+                )}
               </div>
             </div>
           </div>

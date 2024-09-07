@@ -11,9 +11,9 @@ const ProductItem = ({ productItem }) => {
     (cartItem) => cartItem.id === productItem.id
   );
 
-  const Try = () => {
-    console.log(productItem.id);
-  };
+  // const Try = () => {
+  //   console.log(productItem.id);
+  // };
 
   return (
     <div className="product-item glide__slide glide__slide--active">
@@ -67,7 +67,7 @@ const ProductItem = ({ productItem }) => {
           <Link
             to={`product/:${productItem.id}`}
             className="product-link"
-            onClick={Try()}
+            // onClick={Try()}
           >
             <i className="bi bi-eye-fill"></i>
           </Link>
