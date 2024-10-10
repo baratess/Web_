@@ -1,20 +1,19 @@
-﻿import "./CategoryItem.css";
+﻿import PropTypes from "prop-types";
+import "./CategoryItem.css";
 
-const CategoryItem = () => {
+const CategoryItem = ({ category }) => {
   return (
-    <div>
-      <li className="category-item">
-        <a href="#">
-          <img
-            src="img/categories/categories1.png"
-            alt=""
-            className="category-image"
-          />
-          <span className="category-title">Smartphone</span>
-        </a>
-      </li>
-    </div>
+    <li className="category-item">
+      <a href={`/categories/${category.slug}/${category.subSlug}`}>
+        <img src={category.img} alt="" className="category-image" />
+        <span className="category-title">{category.name}</span>
+      </a>
+    </li>
   );
 };
 
 export default CategoryItem;
+
+CategoryItem.propTypes = {
+  category: PropTypes.object,
+};

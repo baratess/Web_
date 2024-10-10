@@ -1,12 +1,9 @@
-﻿/*! categories start  */
-.categories {
-    margin: 40px 0;
-  }
-  
-  .categories .category-list {
-    display: flex;
-    gap: 30px;
-    margin-top: 30px;
-    flex-wrap: wrap;
-  }
-  /*! categories end  */
+﻿.categories {
+  margin: 40px 0;
+}
+
+.categories .category-list {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+}

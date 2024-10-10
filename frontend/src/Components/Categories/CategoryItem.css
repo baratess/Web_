@@ -1,28 +1,37 @@
-﻿.categories .category-item{
+﻿.categories .category-item {
     background-color: #f5f5f5;
     border-radius: 4px;
     flex: 1;
     width: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: column; 
+    align-items: center;    
 }
 
-.categories .category-item a{
-    display: inline-block;
+.categories .category-item a {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: space-between; 
     padding: 10px;
     text-align: center;
     margin: 5px 0;
     font-size: 14px;
     font-weight: 500;
+    height: 100%; 
 }
 
-.categories .category-item .category-image{
-        width: 100%;
-        transition: transform ease .2s;
+.categories .category-title {
+    margin-top: 10px; 
+    flex-shrink: 0; 
 }
 
-.categories .category-item .category-image:hover{
+.categories .category-item .category-image {
+    width: 100%;
+    transition: transform ease 0.2s;
+    object-fit: cover; 
+}
+
+.categories .category-item .category-image:hover {
     transform: scale(1.1);
 }
-
-

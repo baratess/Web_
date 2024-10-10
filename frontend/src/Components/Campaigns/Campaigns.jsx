@@ -7,12 +7,12 @@ const Campaigns = () => {
       <div className="container">
         <div className="campaigns-wrapper">
           <CampaignItem />
-          <CampaignItem />
+          {/* <CampaignItem /> */}
         </div>
-        <div className="campaigns-wrapper">
+        {/* <div className="campaigns-wrapper">
           <CampaignItem />
           <CampaignItem />
-        </div>
+        </div> */}
       </div>
     </section>
   );

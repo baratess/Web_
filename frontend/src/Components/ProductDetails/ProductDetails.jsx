@@ -1,22 +1,26 @@
 ﻿import Breadcrumb from "./Breadcrumb/Breadcrumb";
 import Gallery from "./Gallery/Gallery";
+import PropTypes from "prop-types";
 import Info from "./Info/Info";
 import "./ProductDetails.css";
 import Tabs from "./Tabs/Tabs";
 
-const ProductDetails = () => {
+const ProductDetails = ({ singleProduct, setSingleProduct }) => {
   return (
     <section className="single-product">
       <div className="container">
         <div className="single-product-wrapper">
-          <Breadcrumb />
+          <Breadcrumb singleProduct={singleProduct} />
           <div className="single-content">
             <main className="site-main">
-              <Gallery />
-              <Info />
+              <Gallery singleProduct={singleProduct} />
+              <Info singleProduct={singleProduct} />
             </main>
           </div>
-          <Tabs />
+          <Tabs
+            singleProduct={singleProduct}
+            setSingleProduct={setSingleProduct}
+          />
         </div>
       </div>
     </section>
@@ -24,3 +28,8 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
+ProductDetails.propTypes = {
+  singleProduct: PropTypes.object,
+  setSingleProduct: PropTypes.func,
+};

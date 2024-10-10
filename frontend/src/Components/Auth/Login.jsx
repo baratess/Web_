@@ -1,21 +1,24 @@
 ﻿import { message } from "antd";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "./AuthContext";
+import { Link, useNavigate } from "react-router-dom";
+import "./Login.css";
 
 const Login = () => {
-  const { setIsLogin } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    isLogin: "",
+    adress: "",
+    rememberMe: false, // Burayı ekledim çünkü "rememberMe" checkbox var
   });
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
 
   const handleLogin = async (e) => {
@@ -31,64 +34,98 @@ const Login = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setIsLogin(true);
-        localStorage.setItem("user", JSON.stringify(data));
-        message.success("Giriş başarılı.");
-        if (data.role === "admin") {
-          window.location.href = "/admin";
+        const response2 = await fetch(`${apiUrl}/api/users`);
+        formData.adress = "?";
+        if (response2.ok) {
+          const data2 = await response2.json();
+          const control = data2.some((item) => item._id === data.id);
+
+          if (control) {
+            // Data.id'yi localStorage'a kaydediyoruz
+            localStorage.setItem("user", data.id); // "userId" anahtarını kullanarak kaydediyoruz
+
+            message.success("Giriş başarılı.");
+
+            if (data.role === "admin") {
+              window.location.href = "/admin";
+            } else {
+              navigate("/");
+            }
+          } else {
+            message.error("Kullanıcı bulunamadı.");
+          }
         } else {
-          navigate("/");
+          message.error("Kullanıcı verilerini alırken hata oluştu.");
         }
       } else {
         message.error("Giriş başarısız.");
       }
     } catch (error) {
       console.log("Giriş hatası:", error);
+      message.error("Bir hata oluştu.");
     }
   };
 
   return (
-    <div className="account-column">
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>
-            <span>
-              Username or email address <span className="required">*</span>
-            </span>
-            <input
-              type="text"
-              name="email"
-              onChange={handleInputChange}
-              required
-            />
-          </label>
+    <section className="account-page">
+      <div className="account-container">
+        <div className="account-wrapper">
+          <section className="login-page">
+            <div className="container">
+              <div className="login-wrapper">
+                <h2>Login</h2>
+                <form onSubmit={handleLogin}>
+                  <div>
+                    <label>
+                      <span>
+                        Email address <span className="required">*</span>
+                      </span>
+                      <input
+                        type="email"
+                        name="email"
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <span>
+                        Password <span className="required">*</span>
+                      </span>
+                      <input
+                        type="password"
+                        name="password"
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </label>
+                  </div>
+                  <label className="remember-me">
+                    <span>Beni Hatırla</span>
+                    <input
+                      type="checkbox"
+                      name="rememberMe"
+                      checked={formData.rememberMe}
+                      onChange={handleInputChange}
+                    />
+                  </label>
+                  <button type="submit">Login</button>
+                </form>
+              </div>
+            </div>
+          </section>
         </div>
-        <div>
-          <label>
-            <span>
-              Password <span className="required">*</span>
-            </span>
-            <input
-              type="password"
-              name="password"
-              onChange={handleInputChange}
-              required
-            />
-          </label>
-        </div>
-        <p className="remember">
-          <label>
-            <input type="checkbox" />
-            <span>Remember me</span>
-          </label>
-          <button className="btn btn-sm">Login</button>
-        </p>
-        <a href="#" className="form-link">
-          Lost your password?
-        </a>
-      </form>
-    </div>
+      </div>
+      <div className="register-link">
+        <label>
+          Don’t have an account yet?{" "}
+          <span>
+            <Link to={"/auth/register"}>CREATE NOW!</Link>
+          </span>
+        </label>
+      </div>
+    </section>
   );
 };
 

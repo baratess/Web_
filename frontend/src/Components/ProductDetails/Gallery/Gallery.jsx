@@ -1,19 +1,11 @@
-﻿import { useState } from "react";
-import ProductsData from "../../../data.json";
-import Slider from "react-slick";
+﻿import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import Slider from "react-slick";
 import "./Gallery.css";
 
 function PrevBtn({ onClick }) {
   return (
-    <button
-      className="glide__arrow glide__arrow--left"
-      data-glide-dir="<"
-      onClick={onClick}
-      style={{
-        zIndex: "2",
-      }}
-    >
+    <button className="slick-prev" onClick={onClick}>
       <i className="bi bi-chevron-left"></i>
     </button>
   );
@@ -21,14 +13,7 @@ function PrevBtn({ onClick }) {
 
 function NextBtn({ onClick }) {
   return (
-    <button
-      className="glide__arrow glide__arrow--right"
-      data-glide-dir=">"
-      onClick={onClick}
-      style={{
-        zIndex: "2",
-      }}
-    >
+    <button className="slick-next" onClick={onClick}>
       <i className="bi bi-chevron-right"></i>
     </button>
   );
@@ -42,8 +27,18 @@ PrevBtn.propTypes = {
   onClick: PropTypes.func,
 };
 
-const Gallery = () => {
-  const [activeImg, setActiveImg] = useState(ProductsData[0].img.thumbs[0]);
+const Gallery = ({ singleProduct }) => {
+  const [activeImg, setActiveImg] = useState({
+    img: "",
+    imgIndex: 0,
+  });
+
+  useEffect(() => {
+    if (singleProduct.img && singleProduct.img.length > 0) {
+      setActiveImg({ img: singleProduct.img[0], imgIndex: 0 });
+    }
+  }, [singleProduct.img]);
+  // console.log(singleProduct);
 
   const sliderSettings = {
     dots: false,
@@ -54,30 +49,50 @@ const Gallery = () => {
     prevArrow: <PrevBtn />,
   };
 
+  const hasImages = singleProduct.img && singleProduct.img.length > 0;
+
   return (
     <div className="product-gallery">
-      <div className="single-image-wrapper">
-        <img src={`/${activeImg}`} id="single-image" alt="" />
-      </div>
-      <div className="product-thumb">
-        <Slider {...sliderSettings}>
-          {ProductsData[0].img.thumbs.map((itemImg, index) => (
-            <div
-              className="glide__slide"
-              key={index}
-              onClick={() => setActiveImg(itemImg)}
-            >
-              <img
-                src={`/${itemImg}`}
-                alt=""
-                className={`img-fluid ${itemImg === activeImg ? "active" : ""}`}
-              />
-            </div>
-          ))}
-        </Slider>
-      </div>
+      {hasImages ? (
+        <>
+          <div className="single-image-wrapper">
+            <img src={activeImg.img} id="single-image" alt="Active" />
+          </div>
+          <div className="product-thumb">
+            <Slider {...sliderSettings}>
+              {singleProduct.img.map((itemImg, index) => (
+                <div
+                  key={index}
+                  className={`gallery-thumb ${
+                    activeImg.imgIndex === index ? "active" : ""
+                  }`}
+                  onClick={() =>
+                    setActiveImg({ img: itemImg, imgIndex: index })
+                  }
+                >
+                  <img
+                    src={itemImg}
+                    alt={`Thumbnail ${index}`}
+                    className="img-fluid"
+                  />
+                </div>
+              ))}
+            </Slider>
+          </div>
+        </>
+      ) : (
+        <div className="no-images">
+          <p>No images available</p>
+        </div>
+      )}
     </div>
   );
+};
+
+Gallery.propTypes = {
+  singleProduct: PropTypes.shape({
+    img: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }).isRequired,
 };
 
 export default Gallery;

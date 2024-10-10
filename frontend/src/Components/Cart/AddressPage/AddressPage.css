@@ -1,0 +1,192 @@
+﻿/* Genel Sayfa Stilleri */
+.address-checkout-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+.address-checkout-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Sağ Bölüm (Adres Bilgileri) */
+.address-right-section {
+  flex: 1;
+  border: 1px solid #dee0ea;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ece8e8;
+}
+
+.address-right-section h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.address-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.address-form-group {
+  margin-bottom: 15px;
+}
+
+.address-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.address-form-group input,
+.address-form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.address-form-group textarea {
+  height: 150px;
+  resize: vertical;
+}
+
+.address-submit-button {
+  background-color: #1367ef;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.address-submit-button:hover {
+  background-color: #0d4fbc;
+}
+
+/* Sol Bölüm (Sepet) */
+.address-left-section {
+  flex: 1;
+  border: 1px solid #dee0ea;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ece8e8;
+}
+
+.address-left-section h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.address-cart-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.address-cart-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  border: 1px solid #ddd; /* Opsiyonel: Fotoğrafların etrafında hafif bir kenarlık */
+  padding: 10px;
+  border-radius: 5px; /* Opsiyonel: Kenarları yuvarlatmak için */
+}
+
+.address-cart-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.item-details {
+  flex: 1;
+}
+
+.address-item-name {
+  font-size: 16px;
+  margin: 0;
+}
+
+.item-price {
+  font-size: 14px;
+  color: #888;
+}
+
+.address-cart-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.address-cart-summary p {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.address-checkout-button {
+  background-color: #1367ef;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+/* Notunuz bölümü */
+.form-group-note {
+  margin-bottom: 15px;
+}
+
+.form-group-note label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group-note textarea {
+  width: 100%;
+  height: 130px; /* Yüksekliği ayarla */
+  padding: 10px; /* İç boşluk */
+  border: 1px solid #ccc; /* Kenarlık */
+  border-radius: 4px; /* Kenar yuvarlama */
+  box-sizing: border-box; /* İç boşluk ve kenarlık ile uyumlu genişlik */
+  resize: vertical; /* Sadece yükseklik değiştirilebilir */
+}
+
+.form-group-note textarea:focus {
+  border-color: #1367ef; /* Focus halindeyken kenarlık rengi */
+  outline: none; /* Varsayılan outline'ı kaldır */
+}
+
+.address-checkout-button:hover {
+  background-color: #0d4fbc;
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+  .address-checkout-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .address-right-section,
+  .address-left-section {
+    max-width: 100%;
+  }
+}

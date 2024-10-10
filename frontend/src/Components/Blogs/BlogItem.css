@@ -1,5 +1,29 @@
-﻿.blog-list .blog-image {
+﻿.blog-list {
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 30px; 
+}
+
+.blog-item {
+  flex: 1 1 calc(33.333% - 30px); 
+  box-shadow: 0 5px 15px rgb(0 0 0 / 8%);
+  padding: 20px;
+}
+
+.blog-image {
+  display: flex;
+  justify-content: center; 
+}
+
+.blog-image img {
+  width: 100%;
+  height: auto; 
+}
+
+
+.blog-list .blog-image {
     display: flex;
+    justify-content: space-around;
   }
   
   .blog-list .blog-image img {

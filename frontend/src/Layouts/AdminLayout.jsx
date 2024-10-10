@@ -1,39 +1,75 @@
-﻿import { Layout, Menu } from "antd";
+﻿import { Layout, Menu, message } from "antd";
 import PropTypes from "prop-types";
 import {
   UserOutlined,
   LaptopOutlined,
   RollbackOutlined,
   BarcodeOutlined,
-  DashboardOutlined,
+  // DashboardOutlined,
   ShoppingCartOutlined,
   AppstoreOutlined,
 } from "@ant-design/icons";
-
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const { Sider, Header, Content } = Layout;
 
-// JWT && 3. PARTY LEARN
-const getUserRole = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  return user ? user.role : null;
-};
-
 const AdminLayout = ({ children }) => {
   const navigate = useNavigate();
-  const userRole = getUserRole();
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
+  const [user, setUser] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
+  useEffect(() => {
+    const userId = localStorage.getItem("user");
+
+    if (!userId) {
+      message.error("You must log in first");
+      navigate("/auth/login");
+    } else {
+      setUser(userId);
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      if (user) {
+        try {
+          const response = await fetch(`${apiUrl}/api/users`);
+          if (response.ok) {
+            const data = await response.json();
+            const userInfo = data.find((item) => item._id === user);
+            if (userInfo) {
+              setUserInfo(userInfo);
+            } else {
+              message.error("User not found");
+              navigate("/auth/login");
+            }
+          } else {
+            message.error("Failed to fetch user data");
+            navigate("/auth/login");
+          }
+        } catch (error) {
+          console.log("Giriş hatası:", error);
+          message.error("Bir hata oluştu.");
+          navigate("/auth/login");
+        }
+      }
+    };
+
+    fetchUserInfo();
+  }, [apiUrl, user, navigate]);
 
   const menuItems = [
-    {
-      key: "1",
-      icon: <DashboardOutlined />,
-      label: "Dashboard",
-      path: "/admin",
-      onClick: () => {
-        navigate(`/admin`);
-      },
-    },
+    // {
+    //   key: "1",
+    //   icon: <DashboardOutlined />,
+    //   label: "Dashboard",
+    //   path: "/admin",
+    //   onClick: () => {
+    //     navigate(`/admin`);
+    //   },
+    // },
     {
       key: "2",
       icon: <AppstoreOutlined />,
@@ -54,6 +90,30 @@ const AdminLayout = ({ children }) => {
           path: "/admin/categories/create",
           onClick: () => {
             navigate("/admin/categories/create");
+          },
+        },
+      ],
+    },
+    {
+      key: "14",
+      icon: <AppstoreOutlined />,
+      label: "Alt Kategori",
+      path: "/admin/subcategories",
+      children: [
+        {
+          key: "15",
+          label: "Alt Kategoriler",
+          path: "/admin/subcategories",
+          onClick: () => {
+            navigate(`/admin/subcategories`);
+          },
+        },
+        {
+          key: "16",
+          label: "Yeni Alt Kategori Oluştur",
+          path: "/admin/subcategories/create",
+          onClick: () => {
+            navigate("/admin/subcategories/create");
           },
         },
       ],
@@ -134,7 +194,23 @@ const AdminLayout = ({ children }) => {
     },
   ];
 
-  if (userRole === "admin") {
+  const getPageTitle = () => {
+    for (const item of menuItems) {
+      if (item.children) {
+        for (const child of item.children) {
+          if (child.path === window.location.pathname) {
+            return child.label;
+          }
+        }
+      } else {
+        if (item.path === window.location.pathname) {
+          return item.label;
+        }
+      }
+    }
+  };
+
+  if (userInfo && userInfo.role === "admin") {
     return (
       <div className="admin-layout">
         <Layout
@@ -158,6 +234,7 @@ const AdminLayout = ({ children }) => {
                   color: "white",
                 }}
               >
+                <h2>{getPageTitle()}</h2>
                 <h2>Admin Panel</h2>
               </div>
             </Header>
@@ -174,7 +251,7 @@ const AdminLayout = ({ children }) => {
       </div>
     );
   } else {
-    return (window.location.href = "/");
+    return <div>Redirecting...</div>; // Başka bir yönlendirme göster unutma
   }
 };
 

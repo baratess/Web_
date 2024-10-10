@@ -1,0 +1,142 @@
+﻿/* Genel Account Page Stilleri */
+.account-page {
+  margin: 60px 0;
+}
+
+.account-container {
+  width: 80%;
+  max-width: 600px; /* Maksimum genişlik ayarı */
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.account-wrapper {
+  display: flex;
+  justify-content: center; /* Merkezi hizalama */
+}
+
+/* Login Page Stilleri */
+.login-page {
+  flex: 1; /* Login sayfasının genişliğini artırır */
+}
+
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px; /* Padding azaltıldı */
+  margin-top: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-wrapper h2 {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.login-wrapper form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-wrapper form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.login-wrapper form label span {
+  margin-bottom: 5px;
+}
+
+.required {
+  color: #e51414;
+  font-weight: bold;
+}
+
+.login-wrapper form input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.login-wrapper form input:focus {
+  border-color: #1367ef;
+  outline: none;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center; /* Checkbox ve metni dikeyde ortalar */
+  gap: 8px; /* Checkbox ve metin arasındaki boşluk */
+  font-size: 14px; /* Yazı boyutu */
+  margin-top: 10px; /* Üstten boşluk, isteğe bağlı */
+}
+
+.remember-me input[type="checkbox"] {
+  width: 16px; /* Checkbox genişliği */
+  height: 16px; /* Checkbox yüksekliği */
+  margin: 0; /* Varsayılan margin'i kaldırır */
+  vertical-align: middle; /* Checkbox'ın metinle hizalanmasını sağlar */
+}
+
+.remember-me span {
+  color: #666; /* Metin rengi */
+  line-height: 16px; /* Metin yüksekliği, checkbox ile hizalamak için */
+}
+
+
+/* Buton Stilleri */
+.login-wrapper form button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600; /* Buton metni için biraz daha kalın yazı tipi */
+  color: #fff;
+  background-color: #1367ef;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Geçiş efektleri */
+}
+
+.login-wrapper form button:hover {
+  background-color: #0f5bdb;
+  transform: scale(1.05); /* Hover etkisi sırasında butonu biraz büyütür */
+}
+
+.login-wrapper form button:active {
+  background-color: #0a4db1; /* Tıklama sırasında butonun rengini koyulaştırır */
+  transform: scale(0.98); /* Tıklama sırasında butonu biraz küçültür */
+}
+
+.register-link {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.register-link a{
+  color: blue;
+}
+
+/* Responsive Stiller */
+@media (max-width: 768px) {
+  .account-wrapper {
+    flex-direction: column;
+    align-items: stretch; /* Çocuk öğelerin genişliğini kapsayıcıya göre ayarlar */
+  }
+
+  .login-wrapper {
+    width: 100%;
+    padding: 15px;
+  }
+}

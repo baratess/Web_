@@ -1,6 +1,48 @@
-﻿import "./Footer.css";
+﻿import { useState } from "react";
+import "./Footer.css";
 
 const Footer = () => {
+  const password = import.meta.env.VITE_EMAIL_SECRET_PASSWORD;
+  const toEmail = import.meta.env.VITE_EMAIL_SECRET_TO;
+  const fromEmail = import.meta.env.VITE_EMAIL_SECRET_FROM;
+
+  const [formData, setFormData] = useState({
+    email: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+
+    if (!formData.email) {
+      alert("Lütfen tüm alanları doldurunuz.");
+      return;
+    }
+
+    window.Email.send({
+      Host: "smtp.elasticemail.com",
+      Username: toEmail,
+      Password: password,
+      To: toEmail,
+      From: fromEmail,
+      Subject: "İndirim Kuponu",
+      Body: `
+        E-posta: ${formData.email} <br/> 
+        Mesaj: Sizden bir indirim kuponu istiyorum.
+      `,
+      Port: 2525,
+    })
+      .then(() => alert("Mesajınız gönderildi!"))
+      .catch((error) => console.error("Mail gönderimi başarısız oldu:", error));
+  };
+
   return (
     <footer className="footer">
       <div className="subscribe-row">
@@ -10,25 +52,32 @@ const Footer = () => {
               <div className="footer-subscribe">
                 <div className="footer-subscribe-top">
                   <h3 className="subscribe-title">
-                    Get our emails for info on new items, sales and more.
+                    Kampayalarımızdan yararlanmak için e-posta adresiniz ile
+                    abone olun.
                   </h3>
                   <p className="subscribe-desc">
-                    We will email you a voucher worth $10 off your first order
-                    over $50.
+                    1000 TL ve üzeri alışverişlerinizde 100 TL indirim kuponu
+                    hediye edelim!
                   </p>
                 </div>
                 <div className="footer-subscribe-bottom">
-                  <form>
+                  <form className="" onSubmit={handleSubmit}>
                     <input
-                      type="text"
-                      placeholder="Enter your email address."
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="Lütfen E-mail Adresinizi Giriniz"
+                      required
                     />
-                    <button className="btn">Subscribe</button>
+                    <button type="submit" className="btn">
+                      Abone Ol
+                    </button>
                   </form>
                   <p className="privacy-text">
-                    By subscribing you agree to our{" "}
+                    Yukarıdan sitemize abone olduğunuzda{" "}
                     <a href="#">
-                      Terms & Conditions and Privacy & Cookies Policy.
+                      GİZLİLİK VE ÇEREZ POLİTİKAMIZI kabul etmiş olursunuz.
                     </a>
                   </p>
                 </div>
@@ -37,12 +86,12 @@ const Footer = () => {
             <div className="footer-contact-wrapper">
               <div className="footer-contact-top">
                 <h3 className="contact-title">
-                  Need help?
+                  Yardıma mı ihtiyacın var ?
                   <br />
-                  (+90) 123 456 78 90
+                  (+90) 544 768 41 00
                 </h3>
                 <p className="contact-desc">
-                  We are available 8:00am to 7:00pm
+                  08.00 ile 17.00 arasında hizmet göstermekteyiz.
                 </p>
               </div>
               <div className="footer-contact-bottom">
@@ -54,10 +103,6 @@ const Footer = () => {
                     <img src="/img/footer/google-play.png" alt="" />
                   </a>
                 </div>
-                <p className="privacy-text">
-                  <strong>Shopping App:</strong> Try our View in Your Room
-                  feature, manage registries and save payment info.
-                </p>
               </div>
             </div>
           </div>
@@ -75,94 +120,60 @@ const Footer = () => {
               <div className="footer-desc">
                 <p>
                   {" "}
-                  Quis ipsum suspendisse ultrices gravida. Risus commodo viverra
-                  maecenas accumsan lacus vel facilisis in termapol.
+                  Doğa spor malzemelerini nen ucuz ve en kalitelilerinin
+                  bulunduğu sitemize hoşgeldiniz!
                 </p>
               </div>
               <div className="footer-contact">
                 <p>
-                  <a href="tel:555 555 55 55">(+800) 1234 5678 90</a> –{" "}
-                  <a href="mailto:info@example.com">info@example.com</a>
+                  <a href="tel:555 555 55 55">(+90) 544 768 41 00</a> –{" "}
+                  <a href="mailto:info@example.com">lejyoner@outlook.com</a>
                 </p>
               </div>
             </div>
             <div className="widget-nav-menu">
-              <h4>Information</h4>
+              <h4>Hakkımızda</h4>
               <ul className="menu-list">
                 <li>
-                  <a href="#">About Us</a>
+                  <a href="#">Hakkımızda</a>
                 </li>
                 <li>
-                  <a href="#">Privacy Policy</a>
+                  <a href="#">Gizlilik Politikamız</a>
                 </li>
                 <li>
-                  <a href="#">Returns Policy</a>
+                  <a href="#">İade Politikamız</a>
                 </li>
                 <li>
-                  <a href="#">Shipping Policy</a>
+                  <a href="#">Satış Politikamız</a>
+                </li>
+              </ul>
+            </div>
+
+            <div className="widget-nav-menu">
+              <h4>Mağaza</h4>
+              <ul className="menu-list">
+                <li>
+                  <a href="#">En Çok Satanlar</a>
                 </li>
                 <li>
-                  <a href="#">Dropshipping</a>
+                  <a href="#">İndirimli Ürünler</a>
+                </li>
+                <li>
+                  <a href="#">Son Eklenenler</a>
                 </li>
               </ul>
             </div>
             <div className="widget-nav-menu">
-              <h4>Account</h4>
+              <h4>Kategoriler</h4>
               <ul className="menu-list">
                 <li>
-                  <a href="#">Dashboard</a>
+                  <a href="#">Kamp Malzemeleri</a>
                 </li>
                 <li>
-                  <a href="#">My Orders</a>
+                  <a href="#">Balıkçılık</a>
                 </li>
                 <li>
-                  <a href="#">My Wishlist</a>
-                </li>
-                <li>
-                  <a href="#">Account details</a>
-                </li>
-                <li>
-                  <a href="#">Track My Orders</a>
-                </li>
-              </ul>
-            </div>
-            <div className="widget-nav-menu">
-              <h4>Shop</h4>
-              <ul className="menu-list">
-                <li>
-                  <a href="#">Affiliate</a>
-                </li>
-                <li>
-                  <a href="#">Bestsellers</a>
-                </li>
-                <li>
-                  <a href="#">Discount</a>
-                </li>
-                <li>
-                  <a href="#">Latest Products</a>
-                </li>
-                <li>
-                  <a href="#">Sale Products</a>
-                </li>
-              </ul>
-            </div>
-            <div className="widget-nav-menu">
-              <h4>Categories</h4>
-              <ul className="menu-list">
-                <li>
-                  <a href="#">Women</a>
-                </li>
-                <li>
-                  <a href="#">Men</a>
-                </li>
-                <li>
-                  <a href="#">Bags</a>
-                </li>
-                <li>
-                  <a href="#">Outerwear</a>
-                </li>
-                <li>
-                  <a href="#">Shoes</a>
+                  <a href="#">Doğa Sporları</a>
                 </li>
               </ul>
             </div>
@@ -174,8 +185,8 @@ const Footer = () => {
           <div className="footer-copyright">
             <div className="site-copyright">
               <p>
-                Copyright 2022 © E-Commerce Theme. All right reserved. Powered
-                by B.
+                CreatedBy 2024 © E-Commerce Theme. All right reserved. Powered
+                by <strong>BA.shop</strong>
               </p>
             </div>
             <a href="#">
@@ -184,13 +195,13 @@ const Footer = () => {
             <div className="footer-menu">
               <ul className="footer-menu-list">
                 <li className="list-item">
-                  <a href="#">Privacy Policy</a>
+                  <a href="#">Gizlilik Politikamız</a>
                 </li>
                 <li className="list-item">
-                  <a href="#">Terms and Conditions</a>
+                  <a href="#">Şartlarımız ve Kurallarımız</a>
                 </li>
                 <li className="list-item">
-                  <a href="#">Returns Policy</a>
+                  <a href="#">İade Politikamız</a>
                 </li>
               </ul>
             </div>

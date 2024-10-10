@@ -1,23 +1,26 @@
-﻿import { useContext } from "react";
+﻿import { useState, useContext } from "react";
+import Proptypes from "prop-types";
 import { Link, useLocation } from "react-router-dom";
-import PropType from "prop-types";
 import { CartContext } from "../../../Context/CartProvider";
-import { useAuth } from "../../Auth/AuthContext";
 import "./Header.css";
 
 const Header = ({ setIsSearch }) => {
   const { cartItems } = useContext(CartContext);
-
+  const location = useLocation();
+  const [searchHide] = useState("/profile");
+  const user = localStorage.getItem("user");
   const { pathname } = useLocation();
 
-  const authContext = useAuth(); // AuthContext'ten dönen değeri al
-  console.log("AuthContext:", authContext); // AuthContext'in içeriğini kontrol et
-
-  const isLogin = authContext?.isLogin; // isLogin'in var olup olmadığını kontrol et
+  const handleLogout = () => {
+    if (window.confirm("Çıkış yapmak istediğinize emin misiniz?")) {
+      localStorage.removeItem("user");
+      window.location.href = "/";
+    }
+  };
 
   return (
     <header>
-      <div className="global-notification">
+      {/* <div className="global-notification">
         <div className="container">
           <p>
             SUMMER SALE FOR ALL SWIM SUITS AND FREE EXPRESS INTERNATIONAL
@@ -25,7 +28,7 @@ const Header = ({ setIsSearch }) => {
             <a href="shop.html"> SHOP NOW</a>
           </p>
         </div>
-      </div>
+      </div> */}
       <div className="header-row">
         <div className="container">
           <div className="header-wrapper">
@@ -40,46 +43,6 @@ const Header = ({ setIsSearch }) => {
             <div className="header-center" id="sidebar">
               <nav className="navigation">
                 <ul className="menu-list">
-                  <li className="menu-list-item">
-                    <Link
-                      to={"/"}
-                      className={`menu-link ${pathname === "/" && "active"}`}
-                    >
-                      Home
-                      <i className="bi bi-chevron-down"></i>
-                    </Link>
-                    <div className="menu-dropdown-wrapper">
-                      <ul className="menu-dropdown-content">
-                        <li>
-                          <a href="#">Home Clean</a>
-                        </li>
-                        <li>
-                          <a href="#">Home Collection</a>
-                        </li>
-                        <li>
-                          <a href="#">Home Minimal</a>
-                        </li>
-                        <li>
-                          <a href="#">Home Modern</a>
-                        </li>
-                        <li>
-                          <a href="#">Home Parallax</a>
-                        </li>
-                        <li>
-                          <a href="#">Home Strong</a>
-                        </li>
-                        <li>
-                          <a href="#">Home Style</a>
-                        </li>
-                        <li>
-                          <a href="#">Home Unique</a>
-                        </li>
-                        <li>
-                          <a href="#">Home RTL</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </li>
                   <li className="menu-list-item megamenu-wrapper">
                     <Link
                       to={"/shop"}
@@ -87,112 +50,103 @@ const Header = ({ setIsSearch }) => {
                         pathname === "/shop" && "active"
                       }`}
                     >
-                      Shop
-                      <i className="bi bi-chevron-down"></i>
+                      Kategoriler <i className="bi bi-chevron-down"></i>
                     </Link>
                     <div className="menu-dropdown-wrapper">
                       <div className="menu-dropdown-megamenu">
-                        <div className="megamenu-links">
-                          <div className="megamenu-products">
-                            <h3 className="megamenu-products-title">
-                              Shop Style
+                        <div
+                          className="megamenu-links"
+                          style={{ display: "flex", gap: "40px" }}
+                        >
+                          <div
+                            className="megamenu-products"
+                            style={{ flex: 1 }}
+                          >
+                            <h3
+                              className="megamenu-products-title-outdoor"
+                              style={{
+                                color: "green",
+                                borderBottom: "2px solid green",
+                              }}
+                            >
+                              OUTDOOR
                             </h3>
-                            <ul className="megamenu-menu-list">
+                            <ul
+                              className="megamenu-menu-list"
+                              style={{ gap: "10px" }}
+                            >
                               <li>
-                                <a href="#">Shop Standard</a>
+                                <a href="/categories/outdoor/balık_ürünleri">
+                                  Balıkçılık
+                                </a>
                               </li>
                               <li>
-                                <a href="#">Shop Full</a>
+                                <a href="/categories/outdoor/kamp_malzemeleri">
+                                  Kamp
+                                </a>
                               </li>
                               <li>
-                                <a href="#">Shop Only Categories</a>
-                              </li>
-                              <li>
-                                <a href="#">Shop Image Categories</a>
-                              </li>
-                              <li>
-                                <a href="#">Shop Sub Categories</a>
-                              </li>
-                              <li>
-                                <a href="#">Shop List</a>
-                              </li>
-                              <li>
-                                <a href="#">Hover Style 1</a>
-                              </li>
-                              <li>
-                                <a href="#">Hover Style 2</a>
-                              </li>
-                              <li>
-                                <a href="#">Hover Style 3</a>
+                                <a href="/categories/outdoor/doğa_yürüyüşü">
+                                  Doğa Yürüyüşü
+                                </a>
                               </li>
                             </ul>
                           </div>
-                          <div className="megamenu-products">
-                            <h3 className="megamenu-products-title">
-                              Filter Layout
+                          <div
+                            className="megamenu-products"
+                            style={{ flex: 1 }}
+                          >
+                            <h3
+                              className="megamenu-products-title-sports"
+                              style={{
+                                color: "green",
+                                borderBottom: "2px solid green",
+                              }}
+                            >
+                              SPORLAR
                             </h3>
-                            <ul className="megamenu-menu-list">
+                            <ul
+                              className="megamenu-menu-list"
+                              style={{ gap: "10px" }}
+                            >
                               <li>
-                                <a href="#">Sidebar</a>
+                                <a href="/categories/sports/futbol">Futbol</a>
                               </li>
                               <li>
-                                <a href="#">Filter Side Out</a>
-                              </li>
-                              <li>
-                                <a href="#">Filter Dropdown</a>
-                              </li>
-                              <li>
-                                <a href="#">Filter Drawer</a>
-                              </li>
-                            </ul>
-                          </div>
-                          <div className="megamenu-products">
-                            <h3 className="megamenu-products-title">
-                              Shop Loader
-                            </h3>
-                            <ul className="megamenu-menu-list">
-                              <li>
-                                <a href="#">Shop Pagination</a>
-                              </li>
-                              <li>
-                                <a href="#">Shop Infinity</a>
-                              </li>
-                              <li>
-                                <a href="#">Shop Load More</a>
-                              </li>
-                              <li>
-                                <a href="#">Cart Modal</a>
-                              </li>
-                              <li>
-                                <a href="#">Cart Drawer</a>
-                              </li>
-                              <li>
-                                <a href="#">Cart Page</a>
+                                <a href="/categories/sports/basketbol">
+                                  Basketbol
+                                </a>
                               </li>
                             </ul>
                           </div>
                         </div>
                         <div className="megamenu-single">
                           <a href="#">
-                            <img src="/img/mega-menu.jpg" alt="" />
+                            <img
+                              src="/img/image00323.jpg"
+                              alt=""
+                              style={{
+                                borderRadius: "0.2rem",
+                                width: "450px",
+                                height: "auto",
+                              }}
+                            />
                           </a>
                           <h3 className="megamenu-single-title">
-                            JOIN THE LAYERING GANG
+                            DOĞAYI HİSSEDİN
                           </h3>
-                          <h4 className="megamenu-single-subtitle">
-                            Suspendisse faucibus nunc et pellentesque
-                          </h4>
+                          <h4 className="megamenu-single-subtitle">?????</h4>
                           <a
-                            href="#"
+                            href="/"
                             className="megamenu-single-button btn btn-sm"
                           >
-                            Shop Now
+                            Alışverişe Dön
                           </a>
                         </div>
                       </div>
                     </div>
                   </li>
-                  <li className="menu-list-item">
+                  {/* <li className="menu-list-item">
                     <Link
                       to={"/blog"}
                       className={`menu-link ${
@@ -201,6 +155,132 @@ const Header = ({ setIsSearch }) => {
                     >
                       Blog
                     </Link>
+                  </li> */}
+                  <li className="menu-list-item megamenu-wrapper">
+                    <Link
+                      to={"/project"}
+                      className={`menu-link ${
+                        pathname === "/project" && "active"
+                      }`}
+                    >
+                      Projelerimiz <i className="bi bi-chevron-down"></i>
+                    </Link>
+                    <div className="menu-dropdown-wrapper">
+                      <div className="menu-dropdown-megamenu">
+                        <div
+                          className="megamenu-links"
+                          style={{ display: "flex", gap: "40px" }}
+                        >
+                          <div
+                            className="megamenu-products"
+                            style={{ flex: 1 }}
+                          >
+                            <h3
+                              className="megamenu-products-title-outdoor"
+                              style={{
+                                color: "green",
+                                borderBottom: "2px solid green",
+                              }}
+                            >
+                              3D YAZICI İLE HAZIR BASKI PROJELERİ
+                            </h3>
+                            <ul
+                              className="megamenu-menu-list"
+                              style={{ gap: "10px" }}
+                            >
+                              <li>
+                                <a href="/categories/outdoor/balık_ürünleri">
+                                  Balıkçılık Kutuları
+                                </a>
+                              </li>
+                              <li>
+                                <a href="/categories/outdoor/kamp_malzemeleri">
+                                  Figürler
+                                </a>
+                              </li>
+                              <li>
+                                <a href="/categories/outdoor/doğa_yürüyüşü">
+                                  Alet Edevatlar
+                                </a>
+                              </li>
+                              <li>
+                                <a href="/categories/outdoor/doğa_yürüyüşü">
+                                  Araç-Gereçler
+                                </a>
+                              </li>
+                              <li>
+                                <a href="/categories/outdoor/doğa_yürüyüşü">
+                                  Hediyelik Eşyalar
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                          {/* <div
+                            className="megamenu-products"
+                            style={{ flex: 1 }}
+                          >
+                            <h3
+                              className="megamenu-products-title-sports"
+                              style={{
+                                color: "green",
+                                borderBottom: "2px solid green",
+                              }}
+                            >
+                              SPORLAR
+                            </h3>
+                            <ul
+                              className="megamenu-menu-list"
+                              style={{ gap: "10px" }}
+                            >
+                              <li>
+                                <a href="/categories/sports/futbol">Futbol</a>
+                              </li>
+                              <li>
+                                <a href="/categories/sports/basketbol">
+                                  Basketbol
+                                </a>
+                              </li>
+                            </ul>
+                          </div> */}
+                        </div>
+                        <div className="megamenu-single">
+                          {/* <a href="#">
+                            <img
+                              src="/img/image00323.jpg"
+                              alt=""
+                              style={{
+                                borderRadius: "0.2rem",
+                                width: "450px",
+                                height: "auto",
+                              }}
+                            />
+                          </a> */}
+                          {/* <h3 className="megamenu-single-title">
+                            DOĞAYI HİSSEDİN
+                          </h3>
+                          <h4 className="megamenu-single-subtitle">?????</h4> */}
+                          <h1
+                            style={{
+                              borderBottom: "1px solid #000",
+                              marginTop: "45px",
+                            }}
+                          >
+                            Aklınızda daha farklı fikirler mi var?{" "}
+                          </h1>
+                          <a
+                            href="/contact"
+                            className="megamenu-single-button-project btn btn-sm"
+                            style={{
+                              marginTop: "30px",
+                              display: "flex",
+                              justifyContent: "center",
+                            }}
+                          >
+                            Hemen bizimle iletişime geçin!
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   </li>
                   <li className="menu-list-item">
                     <Link
@@ -209,28 +289,23 @@ const Header = ({ setIsSearch }) => {
                         pathname === "/contact" && "active"
                       }`}
                     >
-                      Contact
+                      İLETİŞİM
                     </Link>
                   </li>
                 </ul>
               </nav>
-              <i className="bi-x-circle" id="close-sidebar"></i>
+              {/* <i className="bi-x-circle" id="close-sidebar"></i> */}
             </div>
             <div className="header-right">
               <div className="header-right-links">
-                <Link to={"/auth"} className="header-account">
-                  <i className="bi bi-person"></i>
-                </Link>
-
-                {/* <Link to={"/auth"} className="header-account">
-                  <i className="bi bi-person"></i>
-                </Link> */}
-                <button
-                  className="search-button"
-                  onClick={() => setIsSearch(true)}
-                >
-                  <i className="bi bi-search"></i>
-                </button>
+                {location.pathname !== searchHide && (
+                  <button
+                    className="search-button"
+                    onClick={() => setIsSearch(true)}
+                  >
+                    <i className="bi bi-search"></i>
+                  </button>
+                )}
                 <div className="header-cart">
                   <Link to={"/cart"} className="header-cart-link">
                     <i className="bi bi-bag"></i>
@@ -239,12 +314,24 @@ const Header = ({ setIsSearch }) => {
                     </span>
                   </Link>
                 </div>
-
-                {!isLogin && (
-                  <button className="search-button" onClick={() => {}}>
-                    <i className="bi bi-box-arrow-right"></i>
-                  </button>
-                )}
+                <div className="header-account">
+                  <i
+                    className={`bi ${user ? "bi-person-circle" : "bi-person"}`}
+                  ></i>
+                  <div className="dropdown-content">
+                    {!user ? (
+                      <>
+                        <Link to="/auth/login">Giriş Yap</Link>
+                        <Link to="/auth/register">Kayıt Ol</Link>
+                      </>
+                    ) : (
+                      <>
+                        <Link to="/profile/user_info">Hesabım</Link>
+                        <button onClick={handleLogout}>Çıkış Yap</button>
+                      </>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -254,8 +341,8 @@ const Header = ({ setIsSearch }) => {
   );
 };
 
-export default Header;
-
 Header.propTypes = {
-  setIsSearch: PropType.func,
+  setIsSearch: Proptypes.func,
 };
+
+export default Header;

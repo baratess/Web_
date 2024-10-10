@@ -32,9 +32,14 @@ const AdminCategoryPage = () => {
       render: (text) => <b>{text}</b>,
     },
     {
-      title: "Category Id",
-      dataIndex: "_id",
-      key: "_id",
+      title: "Category Tag",
+      dataIndex: "slug",
+      key: "slug",
+    },
+    {
+      title: "Category Sub Tag",
+      dataIndex: "subSlug",
+      key: "subSlug",
     },
     {
       title: "Action",
@@ -49,14 +54,14 @@ const AdminCategoryPage = () => {
             Düzenle
           </Button>
           <Popconfirm
-            title="YOU ARE DELETING THIS USER"
-            description="Are you sure to delete this user?"
+            title="YOU ARE DELETING THIS CATEGORY"
+            description="Are you sure to delete this category?"
             okText="Yes"
             cancelText="No"
             onConfirm={() => deleteCategory(record._id)}
           >
             <Button type="primary" danger>
-              Delete
+              Sil
             </Button>
           </Popconfirm>
         </Space>
@@ -94,7 +99,7 @@ const AdminCategoryPage = () => {
       });
 
       if (response.ok) {
-        message.success("User deleted");
+        message.success("Caregory deleted");
         fetchCategory();
       } else {
         message.error("Not Deleted.");

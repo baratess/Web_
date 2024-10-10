@@ -1,11 +1,12 @@
 ﻿const CartProgress = () => {
   return (
     <div className="free-progress-bar">
-      <p className="progress-bar-title">
-        Add <strong>$161.00</strong> to cart and get free shipping!
+      <p>
+        <strong>DİKKAT !</strong> Eğer kupon kodu uyguladıysanız fiyatlar
+        indirim oranında azalacaktır.
       </p>
-      <div className="progress-bar">
-        <span className="progress"></span>
+      <div>
+        <span></span>
       </div>
     </div>
   );

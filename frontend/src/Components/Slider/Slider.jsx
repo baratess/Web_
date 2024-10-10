@@ -15,9 +15,9 @@ const Slider = () => {
   return (
     <section className="slider">
       <div className="slider-elements">
-        {currentSlide === 0 && <SliderItem imageSrc="img/slider/slider1.jpg" />}
-        {currentSlide === 1 && <SliderItem imageSrc="img/slider/slider2.jpg" />}
-        {currentSlide === 2 && <SliderItem imageSrc="img/slider/slider3.jpg" />}
+        {currentSlide === 0 && <SliderItem imageSrc="img/fishing.jpg" />}
+        {currentSlide === 1 && <SliderItem imageSrc="img/camp.jpg" />}
+        {currentSlide === 2 && <SliderItem imageSrc="img/football.jpeg" />}
 
         <div className="slider-buttons">
           <button onClick={prevSlide}>

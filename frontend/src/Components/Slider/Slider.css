@@ -20,18 +20,33 @@
   }
   
   .slider-item .slider-title {
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 42px;
+    font-weight: 400;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: wheat;
   }
   
   .slider-item .slider-heading {
     font-size: 60px;
     font-weight: 600;
+    color: white
   }
   
   .slider-item a {
     position: relative;
     z-index: 1;
+    margin-top: 25px;
+    color: whitesmoke;
+    background-color: #c96032;
+    border-radius: 0.2rem;
+    border-color: #c96032;
+  }
+
+  .slider-item a:hover{
+    background-color: #6a4332;
+    opacity: 1;
+    color: #fff;
+    border-color: #6a4332;
   }
   
   .slider .slider-buttons {
@@ -57,10 +72,10 @@
   }
   
   .slider-buttons button:hover {
-    background-color: #1367ef;
+    background-color: #c96032;
     opacity: 1;
     color: #fff;
-    border-color: #1367ef;
+    border-color: #c96032;
   }
   
   .slider-buttons button i {
@@ -92,7 +107,7 @@
     display: inline-block;
     width: 12px;
     height: 12px;
-    background-color: #1367ef;
+    background-color: #c96032;
     border-radius: 100%;
   }
   

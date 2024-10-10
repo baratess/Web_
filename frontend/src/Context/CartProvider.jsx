@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
+  const [subTotals, setSubTotals] = useState(0);
   const [cartItems, setCartItems] = useState(
     localStorage.getItem("cartItems")
       ? JSON.parse(localStorage.getItem("cartItems"))
@@ -15,17 +16,21 @@ const CartProvider = ({ children }) => {
   }, [cartItems]);
 
   const addToCart = (cartItem) => {
-    // setCartItems([...cartItems, cartItem]);
+    // setCartItems([...cartItems, cartItem]); 1. yol
     setCartItems((prevCart) => [
       ...prevCart,
-      { ...cartItem, quantity: cartItem.quantity ? cartItem.quantity : 1 },
+      {
+        ...cartItem,
+        quantity: cartItem.quantity ? cartItem.quantity : 1,
+      },
     ]);
   };
 
-  const removeToCart = (itemId) => {
+  const removeFromCart = (itemId) => {
     const filteredCartItems = cartItems.filter((cartItem) => {
-      return cartItem.id !== itemId;
+      return cartItem._id !== itemId;
     });
+
     setCartItems(filteredCartItems);
   };
 
@@ -33,8 +38,11 @@ const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         cartItems,
+        setCartItems,
         addToCart,
-        removeToCart,
+        removeFromCart,
+        subTotals,
+        setSubTotals,
       }}
     >
       {children}

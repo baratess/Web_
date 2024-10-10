@@ -51,7 +51,7 @@
   
   /*? table start  */
   .cart-form table img {
-    width: 60px;
+    width: 55px;
   }
   
   .cart-form .shop-table-wrapper {
@@ -76,11 +76,17 @@
     font-weight: 600;
   }
   
-  .cart-form table .product-quantity,
-  .cart-form table .product-subtotal {
+  .cart-form table .product-quantity, 
+  .cart-form table .product-subtotal,
+  .cart-form table .product-features{
     text-align: center;
   }
   
+  .cart-form table .product-features{
+    display: flex;
+    margin-left: 15px;
+  }
+
   .cart-form table tbody {
     border-top: 1px solid #dee0ea;
   }
@@ -88,7 +94,11 @@
   .cart-form table tbody .cart-item {
     border-bottom: 1px solid #dee0ea;
   }
-  
+
+  .cart-form table tbody .cart-item .cart-name {
+    display: flex;
+  }
+
   .cart-form table tbody .cart-image {
     position: relative;
   }

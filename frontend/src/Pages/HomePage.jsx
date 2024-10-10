@@ -4,7 +4,7 @@ import Categories from "../Components/Categories/Categories";
 import Products from "../Components/Products/Products";
 import Campaigns from "../Components/Campaigns/Campaigns";
 import Blog from "../Components/Blogs/Blog";
-import Brands from "../Components/Brands/Brands";
+// import Brands from "../Components/Brands/Brands";
 import CampaignSingle from "../Components/CampaignSingle/CampaignSingle";
 
 const HomePage = () => {
@@ -15,7 +15,7 @@ const HomePage = () => {
       <Products />
       <Campaigns />
       <Blog />
-      <Brands />
+      {/* <Brands /> */}
       <CampaignSingle />
     </React.Fragment>
   );
