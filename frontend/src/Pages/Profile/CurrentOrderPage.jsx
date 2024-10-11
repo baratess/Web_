@@ -173,7 +173,7 @@ const CurrentOrderPage = () => {
         >
           {user ? (
             <div>
-              <Title level={3}>Kişisel Bilgiler</Title>
+              <Title level={3}>Aktif Siparişlerim</Title>
               <Form
                 layout="vertical"
                 style={{
