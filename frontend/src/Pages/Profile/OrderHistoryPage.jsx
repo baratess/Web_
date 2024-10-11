@@ -173,7 +173,7 @@ const OrderHistoryPage = () => {
         >
           {user ? (
             <div>
-              <Title level={3}>Kişisel Bilgiler</Title>
+              <Title level={3}>Geçmiş Siparişlerim</Title>
               <Form
                 layout="vertical"
                 style={{
